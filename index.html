@@ -328,6 +328,58 @@ header{height:var(--header-h);flex-shrink:0;background:#fff;display:flex;align-i
       <button class="btn-add" onclick="addBodyRow()">+ 본문 추가</button>
     </div>
 
+    <!-- 사용법 (접이식, 데스크탑용) -->
+    <div style="border-top:1px solid #f0f0f0;padding-top:16px;">
+      <div onclick="toggleGuide(this)"
+        style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;">
+        <span style="font-size:12px;color:#aaa;font-weight:500;">📖 사용법 & 라이선스</span>
+        <span id="guideArrow" style="font-size:12px;color:#ccc;">▼</span>
+      </div>
+      <div id="inlineGuide" style="display:none;margin-top:14px;display:flex;flex-direction:column;gap:14px;">
+
+        <!-- Tistory -->
+        <div style="background:#fafafa;border-radius:8px;border:1px solid #ebebeb;padding:14px 16px;">
+          <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">📋 Tistory 복사</div>
+          <ol style="font-size:12px;color:#555;line-height:1.9;padding-left:16px;margin:0;">
+            <li>캐릭터 정보 입력 후 <b>Tistory 복사</b> 클릭</li>
+            <li>Tistory 글쓰기 → 우측 상단 <b>HTML</b> 버튼 클릭</li>
+            <li>원하는 위치에 붙여넣기 → 기본모드로 전환 후 발행</li>
+          </ol>
+        </div>
+
+        <!-- HTML 저장 -->
+        <div style="background:#fafafa;border-radius:8px;border:1px solid #ebebeb;padding:14px 16px;">
+          <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">⬇️ HTML 저장 — URL로 공유</div>
+          <ol style="font-size:12px;color:#555;line-height:1.9;padding-left:16px;margin:0;">
+            <li><b>HTML 저장</b> 클릭 → .html 파일 다운로드</li>
+            <li><a href="https://netlify.com/drop" target="_blank" style="color:#3a76c4;">netlify.com/drop</a> 에 파일 드래그앤드롭</li>
+            <li>생성된 URL 공유</li>
+          </ol>
+        </div>
+
+        <!-- 문법 -->
+        <div style="background:#fafafa;border-radius:8px;border:1px solid #ebebeb;padding:14px 16px;">
+          <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">✍️ 본문 문법</div>
+          <div style="font-size:12px;color:#555;line-height:1.9;">
+            <code style="background:#f0f0f0;padding:1px 6px;border-radius:3px;">&gt; 대사</code> → 대사 박스<br>
+            <code style="background:#f0f0f0;padding:1px 6px;border-radius:3px;">[^각주내용]</code> → 각주 번호
+          </div>
+        </div>
+
+        <!-- 라이선스 -->
+        <div style="background:#fafafa;border-radius:8px;border:1px solid #ebebeb;padding:14px 16px;">
+          <div style="font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">⚖️ 라이선스</div>
+          <p style="font-size:12px;color:#555;line-height:1.8;margin:0;">
+            나무위키 패러디 프로필 생성기입니다.<br>
+            저장한 결과물은 자유롭게 사용하실 수 있어요.<br>
+            단, <span style="color:#c04040;font-weight:500;">생성기 자체의 악의적 재배포는 금지</span>합니다.<br>
+            <span style="color:#aaa;">생성기 관련 모든 문의는 받지 않습니다.</span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
   </div><!-- /editor -->
 
   <!-- 모바일 미리보기 -->
@@ -1141,6 +1193,14 @@ function scrollToSec(e,id){e.preventDefault();var el=document.getElementById(id)
   const toast=document.getElementById('toast');
   toast.classList.add('show');
   setTimeout(()=>toast.classList.remove('show'),2500);
+}
+
+function toggleGuide(el){
+  const body = document.getElementById('inlineGuide');
+  const arrow = document.getElementById('guideArrow');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'flex';
+  arrow.textContent = isOpen ? '▼' : '▲';
 }
 
 /* ── 초기화 ── */
