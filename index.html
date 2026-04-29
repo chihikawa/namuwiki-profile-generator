@@ -91,13 +91,6 @@ header{height:var(--header-h);flex-shrink:0;background:#fff;display:flex;align-i
 .quote-group{display:flex;flex-direction:column;gap:8px;}
 .quote-group textarea{resize:vertical;min-height:60px;}
 
-/* ════ 나무위키 렌더 ════
-   구조 참고: 캡처 이미지 (하은채 페이지)
-   - 목차(좌) + 이미지카드(우) 나란히
-   - 프로필 표: 헤더bg=테마색, border=테마색 어둡게
-   - 섹션 번호: 파란색(링크색)
-   - [편집] 우측 정렬
-════ */
 .nw{width:100%;max-width:900px;background:#fff;font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;font-size:14px;line-height:1.8;color:#1a1a1a;border:1px solid #d4d4d4;}
 
 /* 이름 아래 분류 박스 */
@@ -609,7 +602,6 @@ function renderBodyRows(){
       <button type="button" title="굵게" onclick="insertSyntax(this,'**','**')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">B</button>
       <button type="button" title="기울임" onclick="insertSyntax(this,'*','*')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-style:italic;cursor:pointer;font-family:inherit;">I</button>
       <button type="button" title="링크" onclick="insertLink(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🔗</button>
-      <button type="button" title="이미지" onclick="insertImage(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🖼</button>
       <button type="button" title="대사박스" onclick="insertSyntax(this,'> ','')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">&gt;</button>
       <button type="button" title="각주" onclick="insertSyntax(this,'[^','내용]')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">[^]</button>
     `;
@@ -643,7 +635,6 @@ function renderBodyRows(){
         <button type="button" onclick="insertSyntax(this,'**','**')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">B</button>
         <button type="button" onclick="insertSyntax(this,'*','*')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-style:italic;cursor:pointer;font-family:inherit;">I</button>
         <button type="button" onclick="insertLink(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🔗</button>
-        <button type="button" onclick="insertImage(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🖼</button>
         <button type="button" onclick="insertSyntax(this,'> ','')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">&gt;</button>
         <button type="button" onclick="insertSyntax(this,'[^','내용]')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">[^]</button>
       `;
