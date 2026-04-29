@@ -602,6 +602,19 @@ function renderBodyRows(){
       <button class="btn-del" onclick="bodyRowsData.splice(${i},1);renderBodyRows();render()">×</button>`;
     wrap.appendChild(titleRow);
 
+    // ── 대제목 본문
+    const toolbar = document.createElement('div');
+    toolbar.style.cssText='display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;';
+    toolbar.innerHTML=`
+      <button type="button" title="굵게" onclick="insertSyntax(this,'**','**')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">B</button>
+      <button type="button" title="기울임" onclick="insertSyntax(this,'*','*')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-style:italic;cursor:pointer;font-family:inherit;">I</button>
+      <button type="button" title="링크" onclick="insertLink(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🔗</button>
+      <button type="button" title="이미지" onclick="insertImage(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🖼</button>
+      <button type="button" title="대사박스" onclick="insertSyntax(this,'> ','')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">&gt;</button>
+      <button type="button" title="각주" onclick="insertSyntax(this,'[^','내용]')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">[^]</button>
+    `;
+    wrap.appendChild(toolbar);
+
     const ta=document.createElement('textarea');
     ta.className='inp-common';
     ta.placeholder='본문 (줄바꿈으로 문단 구분)';
@@ -624,6 +637,15 @@ function renderBodyRows(){
         <button class="btn-del" onclick="bodyRowsData[${i}].subs.splice(${j},1);renderBodyRows();render()">×</button>`;
       subWrap.appendChild(subTitleRow);
 
+      const subToolbar = document.createElement('div');
+      subToolbar.style.cssText='display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;';
+      subToolbar.innerHTML=`
+        <button type="button" onclick="insertSyntax(this,'**','**')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">B</button>
+        <button type="button" onclick="insertSyntax(this,'*','*')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-style:italic;cursor:pointer;font-family:inherit;">I</button>
+        <button type="button" onclick="insertLink(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🔗</button>
+        <button type="button" onclick="insertImage(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🖼</button>
+        <button type="button" onclick="insertSyntax(this,'> ','')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">&gt;</button>
+        <button type="button" onclick="insertSyntax(this,'[^','내용]')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">[^]</button>
       `;
       subWrap.appendChild(subToolbar);
 
@@ -693,6 +715,53 @@ function clearImg() {
   document.getElementById('imgUrl').value = '';
   hideImgPreview();
   render();
+}
+
+/* ── 툴바 함수 ── */
+function getTextarea(btn){
+  const toolbar = btn.parentElement;
+  const ta = toolbar.nextElementSibling;
+
+  if (ta && ta.tagName === 'TEXTAREA') {
+    return ta;
+  }
+
+  return toolbar.parentElement.querySelector('textarea');
+}
+function insertSyntax(btn, before, after){
+  const ta = getTextarea(btn);
+  if(!ta) return;
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  const selected = ta.value.slice(start, end) || (after ? '텍스트' : '');
+  const insert = before + selected + after;
+  ta.value = ta.value.slice(0, start) + insert + ta.value.slice(end);
+  ta.focus();
+  ta.selectionStart = start + before.length;
+  ta.selectionEnd = start + before.length + selected.length;
+  ta.dispatchEvent(new Event('input'));
+}
+function insertLink(btn){
+  const url = prompt('링크 URL 입력 (https://...)');
+  if(!url) return;
+  const ta = getTextarea(btn);
+  if(!ta) return;
+  const start = ta.selectionStart, end = ta.selectionEnd;
+  const label = ta.value.slice(start, end) || '링크텍스트';
+  const insert = `[${label}](${url})`;
+  ta.value = ta.value.slice(0, start) + insert + ta.value.slice(end);
+  ta.focus();
+  ta.dispatchEvent(new Event('input'));
+}
+function insertImage(btn){
+  const url = prompt('이미지 URL 입력 (https://...)');
+  if(!url) return;
+  const ta = getTextarea(btn);
+  if(!ta) return;
+  const pos = ta.selectionStart;
+  const insert = `![](${url})`;
+  ta.value = ta.value.slice(0, pos) + insert + ta.value.slice(pos);
+  ta.focus();
+  ta.dispatchEvent(new Event('input'));
 }
 
 /* ── 위키 HTML 빌드 ── */
