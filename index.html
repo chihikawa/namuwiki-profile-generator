@@ -1041,22 +1041,27 @@ body{font-family:'Noto Sans KR',sans-serif;background:#e8e8e8;min-height:100vh;p
 <div class="nw-pf">${inner}</div>
 <script>
 function toggleFnTip(el,n,event){
+  var existing=document.getElementById('nw-global-tip');
   var wasThis=el.dataset.tipActive==='1';
   document.querySelectorAll('.nw-fn-num.active').forEach(function(e){e.classList.remove('active');e.dataset.tipActive='';});
+  if(existing)existing.remove();
   if(wasThis)return;
   el.classList.add('active');el.dataset.tipActive='1';
-  var tip=el.querySelector('.nw-fn-tip');if(!tip)return;
-  var rect=el.getBoundingClientRect();
-  var th=tip.offsetHeight||60;
-  if(rect.top-th-6<8){tip.style.bottom='';tip.style.top='120%';}
-  else{tip.style.top='';tip.style.bottom='120%';}
-  var tw=tip.offsetWidth||200;
-  if(rect.left+tw>window.innerWidth-8){tip.style.left='auto';tip.style.right='0';}
-  else{tip.style.left='0';tip.style.right='';}
+  var src=el.querySelector('.nw-fn-tip');if(!src)return;
+  var tip=document.createElement('div');
+  tip.id='nw-global-tip';tip.className='nw-fn-tip';
+  tip.style.cssText='display:block;position:fixed;z-index:99999;';
+  tip.innerHTML=src.innerHTML;
+  document.body.appendChild(tip);
+  var tw=tip.offsetWidth,th=tip.offsetHeight,rect=el.getBoundingClientRect(),vw=window.innerWidth,vh=window.innerHeight;
+  var top=rect.top-th-6;if(top<8)top=rect.bottom+6;if(top+th>vh-8)top=vh-th-8;
+  var left=rect.left;if(left+tw>vw-8)left=vw-tw-8;if(left<8)left=8;
+  tip.style.top=top+'px';tip.style.left=left+'px';
 }
 document.addEventListener('click',function(e){
-  if(!e.target.closest('.nw-fn-num')){
+  if(!e.target.closest('.nw-fn-num')&&!e.target.closest('#nw-global-tip')){
     document.querySelectorAll('.nw-fn-num.active').forEach(function(el){el.classList.remove('active');el.dataset.tipActive='';});
+    var t=document.getElementById('nw-global-tip');if(t)t.remove();
   }
 });
 function scrollToEndnote(n){var el=document.getElementById('nw-fn-'+n);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
