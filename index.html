@@ -624,15 +624,6 @@ function renderBodyRows(){
         <button class="btn-del" onclick="bodyRowsData[${i}].subs.splice(${j},1);renderBodyRows();render()">×</button>`;
       subWrap.appendChild(subTitleRow);
 
-      const subToolbar = document.createElement('div');
-      subToolbar.style.cssText='display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;';
-      subToolbar.innerHTML=`
-        <button type="button" onclick="insertSyntax(this,'**','**')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">B</button>
-        <button type="button" onclick="insertSyntax(this,'*','*')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;font-style:italic;cursor:pointer;font-family:inherit;">I</button>
-        <button type="button" onclick="insertLink(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🔗</button>
-        <button type="button" onclick="insertImage(this)" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">🖼</button>
-        <button type="button" onclick="insertSyntax(this,'> ','')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">&gt;</button>
-        <button type="button" onclick="insertSyntax(this,'[^','내용]')" style="padding:4px 8px;border:1px solid #ebebeb;border-radius:5px;background:#fafafa;font-size:12px;cursor:pointer;">[^]</button>
       `;
       subWrap.appendChild(subToolbar);
 
